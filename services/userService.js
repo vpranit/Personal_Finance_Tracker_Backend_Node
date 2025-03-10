@@ -1,5 +1,6 @@
 const db = require("../models/users");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (name, email, password) => {
     debugger;
@@ -18,4 +19,17 @@ const registerUser = async (name, email, password) => {
     return { _id: newUser._id, name: newUser.name, email: newUser.email };
 }
 
-module.exports = {registerUser};
+const loginUser = async (email, password) => {
+    const user = db.users.find(user => user.email === email);
+    if(!user){
+        throw new Error("Invalid email or password");
+    }
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if(!isPasswordMatch){
+        throw new Error("Invalid email or password");
+    }
+    const token = jwt.sign({ _id: user._id, email: user.email},process.env.JWT_SECRET, {expiresIn: "1h"});
+    return {token};
+}
+
+module.exports = {registerUser, loginUser};
