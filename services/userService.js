@@ -3,20 +3,19 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const registerUser = async (name, email, password) => {
-    debugger;
     const exsistinguser = db.users.find(user => user.email === email);
     if(exsistinguser){
         throw new Error("User already exsist");
     }
     const hashedpassword = await bcrypt.hash(password, 10);
     const newUser = {
-        __id: String(Date.now()),
+        userid: String(Date.now()),
         name,
         email,
         password: hashedpassword
     }
     db.users.push(newUser);
-    return { _id: newUser._id, name: newUser.name, email: newUser.email };
+    return { name: newUser.name, email: newUser.email };
 }
 
 const loginUser = async (email, password) => {
