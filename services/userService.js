@@ -27,7 +27,7 @@ const loginUser = async (email, password) => {
     if(!isPasswordMatch){
         throw new Error("Invalid email or password");
     }
-    const token = jwt.sign({ _id: user._id, email: user.email},process.env.JWT_SECRET, {expiresIn: "1h"});
+    const token = jwt.sign({ userid: user.userid, email: user.email},process.env.JWT_SECRET, {expiresIn: "1h"});
     return {token};
 }
 
