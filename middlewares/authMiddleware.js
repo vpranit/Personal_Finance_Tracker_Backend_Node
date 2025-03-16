@@ -7,7 +7,6 @@ const authMiddleware = (req, res, next) => {
     }
     try {
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("verified ===> "+verified);
         req.user = verified;
         next();
     } catch (err) {

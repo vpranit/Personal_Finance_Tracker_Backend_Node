@@ -2,7 +2,7 @@
 
 const db = {
     users:[],
-    transaction:[],
+    transactions:[],
     budgets:[],
 }
 module.exports = db;

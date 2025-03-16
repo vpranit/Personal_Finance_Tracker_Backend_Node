@@ -22,7 +22,6 @@ const loginUser = async(req,res) => {
     const {token} = await userService.loginUser(email, password);
     return res.status(200).json({message: "User Logged In successfully", token});
   } catch (error) {
-    console.log(error);
     return res.status(401).json({message: error.message})
   }
 };
